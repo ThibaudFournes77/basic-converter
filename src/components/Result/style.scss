@@ -1,20 +1,19 @@
-.header{
+.result{
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  background-color: #bb5432;
-  height: 27%;
-  padding: 2.2rem 1.5rem;
+  height: 30%;
+  padding: 2.5rem 1.5rem;
 
-  &__title{
-    color: #fff;
+  &__value{
+    color: #bb5432;
     font-weight: 700;
     font-size: 2rem;
   }
 
-  &__subtitle{
-    color: #fff;
+  &__unit{
+    color: #bb5432;
     font-weight: 300;
     font-size: 1.2rem;
   }

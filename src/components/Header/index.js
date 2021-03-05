@@ -4,9 +4,10 @@ import './style.scss';
 
 function Header() {
   return (
-    <div>
-      Header
-    </div>
+    <header className="header">
+      <h1 className="header__title">Converter</h1>
+      <p className="header__subtitle">1 euro</p>
+    </header>
   );
 }
 

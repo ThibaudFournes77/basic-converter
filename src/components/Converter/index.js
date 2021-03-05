@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from 'src/components/Header';
 import Currencies from 'src/components/Currencies';
-import Footer from 'src/components/Footer';
+import Result from 'src/components/Result';
 
 import './style.scss';
 
@@ -10,7 +10,7 @@ function Converter() {
     <div className="converter">
       <Header />
       <Currencies />
-      <Footer />
+      <Result />
     </div>
   );
 }

@@ -6,12 +6,15 @@ import './style.scss';
 
 function Currencies() {
   return (
-    <div>
+    <ul className="currencies">
       <Currency />
       <Currency />
       <Currency />
       <Currency />
-    </div>
+      <Currency />
+      <Currency />
+      <Currency />
+    </ul>
   );
 }
 
