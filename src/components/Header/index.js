@@ -1,14 +1,20 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './style.scss';
 
-function Header() {
+function Header({ title, subtitle }) {
   return (
     <header className="header">
-      <h1 className="header__title">Converter</h1>
-      <p className="header__subtitle">1 euro</p>
+      <h1 className="header__title">{title}</h1>
+      <p className="header__subtitle">{subtitle}</p>
     </header>
   );
 }
+
+Header.propTypes = {
+  title: PropTypes.string.isRequired,
+  subtitle: PropTypes.string.isRequired,
+};
 
 export default Header;

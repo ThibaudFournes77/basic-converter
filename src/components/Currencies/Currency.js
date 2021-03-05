@@ -1,11 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-function Currency() {
+function Currency({ name }) {
   return (
     <li>
-      Currency
+      {name}
     </li>
   );
 }
+
+Currency.propTypes = {
+  name: PropTypes.string.isRequired,
+};
 
 export default Currency;

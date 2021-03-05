@@ -1,25 +1,28 @@
 .currencies{
   height: 43%;
   overflow-y: scroll;
-
-  li{
-    height: 40px;
+  p{
+    height: 45px;
     border-bottom: 1px solid #f1c5b6;
-    padding: .8rem 1rem;
+    padding: 1rem 1rem .8rem 1rem;
     color: #bb5432;
-
-    &:hover{
-      cursor: pointer;
-      background-color: #f1c5b6;
-      transition: background-color 0.4s ease-out;
-    }
-  }
-
-  li:not(:first-child){
-    font-weight: 500;
-  }
-
-  li:first-child{
     font-weight: 700;
   }
+
+  &__list{
+    li{
+      height: 40px;
+      border-bottom: 1px solid #f1c5b6;
+      padding: .8rem 1rem;
+      color: #bb5432;
+      font-weight: 500;
+
+      &:hover{
+        cursor: pointer;
+        background-color: #f1c5b6;
+        transition: background-color 0.4s ease-out;
+      }
+    }
+  }
+  
 }
