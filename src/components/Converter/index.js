@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from 'src/components/Header';
+import Toggler from 'src/components/Toggler';
 import Currencies from 'src/components/Currencies';
 import Result from 'src/components/Result';
 
@@ -33,7 +34,7 @@ class Converter extends React.Component {
           title="Converter"
           subtitle="1 euro"
         />
-        <button type="button" onClick={this.handleClick}>Afficher/masquer</button>
+        <Toggler open={open} onClick={this.handleClick} />
         { open && (
         <Currencies currencies={currenciesData} />
         ) }
