@@ -18,7 +18,10 @@ function Currencies({ currencies }) {
 }
 
 Currencies.propTypes = {
-  currencies: PropTypes.array.isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string,
+    rate: PropTypes.number,
+  })).isRequired,
 };
 
 export default Currencies;
