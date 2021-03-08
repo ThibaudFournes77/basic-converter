@@ -8,26 +8,18 @@ import currenciesData from 'src/data/currencies';
 import './style.scss';
 
 class Converter extends React.Component {
-  constructor(props) {
-    super(props);
-    // le state permet de stocker des données internes au composant
-    // à chaque fois qu'on modifie une de ses valeurs, React refait un rendu.
-    this.state = {
-      open: true,
-    };
-
-    // pour chaque méthode de la classe, on va devoir les lier au contexte de la classe
-    // ainsi elles prendront le this de l'instance de classe
-    this.handleClick = this.handleClick.bind(this);
+  // grâce au plugin de babel @babel/plugin-proposal-class-properties
+  // on ne sera plus obligé de créer le constructor pour initialiser le state
+  // il nous permet de créer des propriétés de classe
+  state = {
+    open: true,
   }
 
-  handleClick() {
-    // chaque fonction a son propre contexte d'exécution
-    // elles redéfinissent un nouveau this
+  handleClick = () => {
+    // les fonctions fléchées ne redéfinissent pas de contexte d'exécution
+    // elles prennent le contexte parent
+    // ici on a le this de la classe
     const { open } = this.state;
-    // Pour faire varier le state, il faut utiliser setState
-    // React est notifié qu'il y a un changement dans le state
-    // il exécutera de nouveau la méthode render()
     this.setState({
       open: !open,
     });
