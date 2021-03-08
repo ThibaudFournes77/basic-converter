@@ -14,9 +14,11 @@ class Converter extends React.Component {
   // il nous permet de créer des propriétés de classe
   state = {
     open: true,
+    baseAmount: 1,
+    currency: 'United States Dollar',
   }
 
-  handleClick = () => {
+  handleClickButton = () => {
     // les fonctions fléchées ne redéfinissent pas de contexte d'exécution
     // elles prennent le contexte parent
     // ici on a le this de la classe
@@ -26,21 +28,28 @@ class Converter extends React.Component {
     });
   }
 
+  makeConversion = () => {
+    const { baseAmount, currency } = this.state;
+    const foundCurrency = currenciesData.find((item) => item.name === currency);
+    const result = baseAmount * foundCurrency.rate;
+    return Number(result.toFixed(2));
+  }
+
   render() {
-    const { open } = this.state;
+    const { open, baseAmount, currency } = this.state;
     return (
       <div className="converter">
         <Header
           title="Converter"
-          subtitle="1 euro"
+          baseAmount={baseAmount}
         />
-        <Toggler open={open} onClick={this.handleClick} />
+        <Toggler open={open} onClick={this.handleClickButton} />
         { open && (
         <Currencies currencies={currenciesData} />
         ) }
         <Result
-          value={1.09}
-          unit="United States Dollar"
+          value={this.makeConversion()}
+          currency={currency}
         />
       </div>
     );
