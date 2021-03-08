@@ -1,21 +1,16 @@
+@use 'src/styles/vars' as v;
+
 .header{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #bb5432;
-  height: 27%;
-  padding: 2.2rem 1.5rem;
-
+  color: v.$color-light;
+  text-align: center;
+  background-color: v.$color-primary;
+  padding: v.$gutter * 2;
   &__title{
-    color: #fff;
+    font-size: 2em;
     font-weight: 700;
-    font-size: 2rem;
+    margin-bottom: v.$gutter;
   }
-
   &__subtitle{
-    color: #fff;
     font-weight: 300;
-    font-size: 1.2rem;
   }
 }

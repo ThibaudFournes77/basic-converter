@@ -1,20 +1,19 @@
+@use 'src/styles/vars' as v;
+
 .result{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  height: 30%;
-  padding: 2.5rem 1.5rem;
+
+  background-color: v.$color-light;
+  padding: v.$gutter * 2.5 0;
+  text-align: center;
+  color: v.$color-primary;
 
   &__value{
-    color: #bb5432;
+    font-size: 2em;
     font-weight: 700;
-    font-size: 2rem;
+    margin-bottom: v.$gutter;
   }
-
   &__unit{
-    color: #bb5432;
+    font-size: 1.2em;
     font-weight: 300;
-    font-size: 1.2rem;
   }
 }

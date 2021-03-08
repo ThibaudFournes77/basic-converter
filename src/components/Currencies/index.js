@@ -7,7 +7,7 @@ import './style.scss';
 function Currencies({ currencies }) {
   return (
     <div className="currencies">
-      <p>Currencies</p>
+      <p className="currencies__title">Currencies</p>
       <ul className="currencies__list">
         {
           currencies.map((currency) => <Currency key={currency.name} name={currency.name} />)

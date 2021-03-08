@@ -1,8 +1,13 @@
+// pour importer des fichiers SCSS on passe par @use
+// on peut omettre l'extension et l'underscore au début du nom du fichier
 @use 'reset';
-@use 'vars';
+@use 'vars' as v;
+
+@import url('https://fonts.googleapis.com/css?family=Spartan&display=swap');
 
 body {
-  font-family: sans-serif;
+  font-family: 'Spartan', sans-serif;
+  background-color: v.$color-alt;
 }
 
 /* 

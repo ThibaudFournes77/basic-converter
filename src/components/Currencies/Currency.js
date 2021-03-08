@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 function Currency({ name }) {
   return (
-    <li>
+    <li className="currency">
       {name}
     </li>
   );

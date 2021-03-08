@@ -1,28 +1,23 @@
+@use 'src/styles/vars' as v;
+
 .currencies{
-  height: 43%;
+  background-color: v.$color-light;
+  color: v.$color-primary;
+  max-height: 40vh;
   overflow-y: scroll;
-  p{
-    height: 45px;
-    border-bottom: 1px solid #f1c5b6;
-    padding: 1rem 1rem .8rem 1rem;
-    color: #bb5432;
+  &__title{
+    padding: v.$gutter * 1.5 v.$gutter v.$gutter;
     font-weight: 700;
   }
+}
 
-  &__list{
-    li{
-      height: 40px;
-      border-bottom: 1px solid #f1c5b6;
-      padding: .8rem 1rem;
-      color: #bb5432;
-      font-weight: 500;
-
-      &:hover{
-        cursor: pointer;
-        background-color: #f1c5b6;
-        transition: background-color 0.4s ease-out;
-      }
-    }
+.currency{
+  padding: v.$gutter / 1.5 v.$gutter;
+  border-top: 1px solid v.$color-alt;
+  cursor: pointer;
+  transition: background-color v.$transition-slow;
+  &:hover{
+    background-color: v.$color-alt;
+    transition: background-color v.$transition-fast;
   }
-  
 }
