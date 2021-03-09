@@ -80,6 +80,12 @@ class Converter extends React.Component {
     });
   }
 
+  setBaseAmount = (value) => {
+    this.setState({
+      baseAmount: value,
+    });
+  }
+
   getCurrencies = () => {
     const { currencies, search } = this.state;
     let filteredListCurrenciesList = currencies;
@@ -120,6 +126,7 @@ class Converter extends React.Component {
         <Header
           title="Converter"
           baseAmount={baseAmount}
+          onChangeBaseAmount={this.setBaseAmount}
         />
         <Toggler open={open} onClick={this.setOpen} />
         { open && (
