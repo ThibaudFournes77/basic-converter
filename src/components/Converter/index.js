@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { cloneElement } from 'react';
 import Header from 'src/components/Header';
 import Toggler from 'src/components/Toggler';
 import Currencies from 'src/components/Currencies';
@@ -17,6 +17,7 @@ class Converter extends React.Component {
     baseAmount: 1,
     currency: 'United States Dollar',
     search: '',
+    currencies: currenciesData,
   }
 
   handleClickButton = () => {
@@ -41,6 +42,19 @@ class Converter extends React.Component {
     });
   }
 
+  getCurrencies = () => {
+    const { currencies, search } = this.state;
+    const filteredListCurrenciesList = currencies;
+
+    // ici je veux filtrer la liste des devises en fonction de search
+    const filterdCurrencies = filteredListCurrenciesList.filter((currency) => {
+      // est-ce que ce qui est dans search est inclus dans la propriété name
+      return currency.name.includes(search);
+    });
+
+    return filterdCurrencies;
+  }
+
   makeConversion = () => {
     const { baseAmount, currency } = this.state;
     const foundCurrency = currenciesData.find((item) => item.name === currency);
@@ -52,6 +66,11 @@ class Converter extends React.Component {
     const {
       open, baseAmount, currency, search,
     } = this.state;
+
+    const value= this.makeConversion();
+
+    const currenciesList = this.getCurrencies();
+
     return (
       <div className="converter">
         <Header
@@ -61,7 +80,7 @@ class Converter extends React.Component {
         <Toggler open={open} onClick={this.handleClickButton} />
         { open && (
         <Currencies
-          currencies={currenciesData}
+          currencies={currenciesList}
           inputValue={search}
           handleClickCurrency={this.handleClickCurrency}
           onChangeInputValue={this.setSearch}
