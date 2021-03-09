@@ -7,7 +7,11 @@ import './style.scss';
 function Currencies({ currencies, handleClickCurrency }) {
   return (
     <div className="currencies">
-      <p className="currencies__title">Currencies</p>
+      <input 
+        type="text" 
+        className="currencies__input"
+        placeholder="Rechercher une devise"
+      />
       <ul className="currencies__list">
         {
           currencies.map((currency) => (

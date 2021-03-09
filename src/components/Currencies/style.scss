@@ -9,6 +9,17 @@
     padding: v.$gutter * 1.5 v.$gutter v.$gutter;
     font-weight: 700;
   }
+  &__input {
+    width: 100%;
+    padding: v.$gutter * 2 v.$gutter v.$gutter;
+    border: none;
+    color: v.$color-primary;
+    font-size: 1em;
+    font-weight: 700;
+    &::placeholder {
+      color: v.$color-alt;
+    }
+  }
 }
 
 .currency{
