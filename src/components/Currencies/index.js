@@ -4,7 +4,17 @@ import Currency from 'src/components/Currencies/Currency';
 
 import './style.scss';
 
-function Currencies({ currencies, handleClickCurrency, inputValue }) {
+function Currencies({
+  currencies,
+  handleClickCurrency,
+  inputValue,
+  onChangeInputValue,
+}) {
+  // ici on prépare un gandler qui sera exécuté à chaque événement "change" de l'input
+  const handleOnChange = (event) => {
+    console.log(event.target.value);
+    onChangeInputValue(event.target.value);
+  };
   return (
     <div className="currencies">
       <input
@@ -12,6 +22,7 @@ function Currencies({ currencies, handleClickCurrency, inputValue }) {
         className="currencies__input"
         placeholder="Rechercher une devise"
         value={inputValue}
+        onChange={handleOnChange}
       />
       <ul className="currencies__list">
         {
@@ -35,6 +46,7 @@ Currencies.propTypes = {
   })).isRequired,
   handleClickCurrency: PropTypes.func.isRequired,
   inputValue: PropTypes.string.isRequired,
+  onChangeInputValue: PropTypes.func.isRequired,
 };
 
 export default Currencies;

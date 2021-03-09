@@ -35,6 +35,12 @@ class Converter extends React.Component {
     });
   }
 
+  setSearch = (value) => {
+    this.setState({
+      search: value,
+    });
+  }
+
   makeConversion = () => {
     const { baseAmount, currency } = this.state;
     const foundCurrency = currenciesData.find((item) => item.name === currency);
@@ -58,6 +64,7 @@ class Converter extends React.Component {
           currencies={currenciesData}
           inputValue={search}
           handleClickCurrency={this.handleClickCurrency}
+          onChangeInputValue={this.setSearch}
         />
         ) }
         <Result
