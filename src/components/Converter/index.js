@@ -1,4 +1,4 @@
-import React, { cloneElement } from 'react';
+import React from 'react';
 import Header from 'src/components/Header';
 import Toggler from 'src/components/Toggler';
 import Currencies from 'src/components/Currencies';
@@ -44,15 +44,19 @@ class Converter extends React.Component {
 
   getCurrencies = () => {
     const { currencies, search } = this.state;
-    const filteredListCurrenciesList = currencies;
+    let filteredListCurrenciesList = currencies;
 
     // ici je veux filtrer la liste des devises en fonction de search
-    const filterdCurrencies = filteredListCurrenciesList.filter((currency) => {
-      // est-ce que ce qui est dans search est inclus dans la propriété name
-      return currency.name.includes(search);
-    });
+    if (search) {
+      filteredListCurrenciesList = filteredListCurrenciesList.filter((currency) => {
+        const loweredCurrency = currency.name.toLowerCase();
+        const loweredSearch = search.toLowerCase();
+        // est-ce que ce qui est dans search est inclus dans la propriété name
+        return loweredCurrency.includes(loweredSearch);
+      });
+    }
 
-    return filterdCurrencies;
+    return filteredListCurrenciesList;
   }
 
   makeConversion = () => {
@@ -67,8 +71,10 @@ class Converter extends React.Component {
       open, baseAmount, currency, search,
     } = this.state;
 
-    const value= this.makeConversion();
+    const value = this.makeConversion();
 
+    // à chaque rendu du JSX, on récupère la liste des devises
+    // filtrées en fonction de la valeur de search
     const currenciesList = this.getCurrencies();
 
     return (
@@ -87,7 +93,7 @@ class Converter extends React.Component {
         />
         ) }
         <Result
-          value={this.makeConversion()}
+          value={value}
           currency={currency}
         />
       </div>
