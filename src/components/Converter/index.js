@@ -16,6 +16,7 @@ class Converter extends React.Component {
     open: true,
     baseAmount: 1,
     currency: 'United States Dollar',
+    search: '',
   }
 
   handleClickButton = () => {
@@ -42,7 +43,9 @@ class Converter extends React.Component {
   }
 
   render() {
-    const { open, baseAmount, currency } = this.state;
+    const {
+      open, baseAmount, currency, search,
+    } = this.state;
     return (
       <div className="converter">
         <Header
@@ -51,7 +54,11 @@ class Converter extends React.Component {
         />
         <Toggler open={open} onClick={this.handleClickButton} />
         { open && (
-        <Currencies currencies={currenciesData} handleClickCurrency={this.handleClickCurrency} />
+        <Currencies
+          currencies={currenciesData}
+          inputValue={search}
+          handleClickCurrency={this.handleClickCurrency}
+        />
         ) }
         <Result
           value={this.makeConversion()}

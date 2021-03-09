@@ -4,13 +4,14 @@ import Currency from 'src/components/Currencies/Currency';
 
 import './style.scss';
 
-function Currencies({ currencies, handleClickCurrency }) {
+function Currencies({ currencies, handleClickCurrency, inputValue }) {
   return (
     <div className="currencies">
-      <input 
-        type="text" 
+      <input
+        type="text"
         className="currencies__input"
         placeholder="Rechercher une devise"
+        value={inputValue}
       />
       <ul className="currencies__list">
         {
@@ -33,6 +34,7 @@ Currencies.propTypes = {
     rate: PropTypes.number,
   })).isRequired,
   handleClickCurrency: PropTypes.func.isRequired,
+  inputValue: PropTypes.string.isRequired,
 };
 
 export default Currencies;
