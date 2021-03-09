@@ -20,6 +20,33 @@ class Converter extends React.Component {
     currencies: currenciesData,
   }
 
+  // Les méthodes de cycle de vie permettent d'interagir avec le DOM
+  // ou l'extérieur de l'application. On gère les effets de bord ici :
+  // - appels aux API
+  // - Timers
+  // - Listeners
+  // - Manipulation du DOM réel
+
+  // appelé au premier rendu
+  componentDidMount() {
+    const { currency } = this.state;
+    this.pageTitleEffect();
+  }
+
+  // phase de mise à jour
+  // appelé à chaque render (après le 1er rendu)
+  componentDidUpdate(prevState) {
+    const { currency } = this.state;
+    if (prevState.currency !== currency) {
+      this.pageTitleEffect();
+    }
+  }
+
+  pageTitleEffect = () => {
+    const { currency } = this.state;
+    document.title = currency;
+  }
+
   handleClickButton = () => {
     // les fonctions fléchées ne redéfinissent pas de contexte d'exécution
     // elles prennent le contexte parent
