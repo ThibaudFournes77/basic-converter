@@ -31,6 +31,7 @@ class Converter extends React.Component {
   componentDidMount() {
     const { currency } = this.state;
     this.pageTitleEffect();
+    document.addEventListener('keydown', this.handleEscKeyUp);
   }
 
   // phase de mise à jour
@@ -42,12 +43,22 @@ class Converter extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.handleEscKeyUp);
+  }
+
+  handleEscKeyUp = (event) => {
+    if (event.key === 'Escape') {
+      this.setOpen();
+    }
+  }
+
   pageTitleEffect = () => {
     const { currency } = this.state;
     document.title = currency;
   }
 
-  handleClickButton = () => {
+  setOpen = () => {
     // les fonctions fléchées ne redéfinissent pas de contexte d'exécution
     // elles prennent le contexte parent
     // ici on a le this de la classe
@@ -110,7 +121,7 @@ class Converter extends React.Component {
           title="Converter"
           baseAmount={baseAmount}
         />
-        <Toggler open={open} onClick={this.handleClickButton} />
+        <Toggler open={open} onClick={this.setOpen} />
         { open && (
         <Currencies
           currencies={currenciesList}
