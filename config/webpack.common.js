@@ -1,7 +1,13 @@
 const paths = require('./paths');
+const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
+
+const dotenv = require('dotenv').config( {
+  path: path.join(paths.root, '.env')
+});
 
 module.exports = {
   entry: [
@@ -35,6 +41,10 @@ module.exports = {
     new HtmlWebpackPlugin({
       favicon: paths.assets + '/favicon.ico',
       template: paths.assets + '/index.html',
+    }),
+
+    new webpack.DefinePlugin({
+      "process.env": JSON.stringify(dotenv.parsed)
     }),
   ],
 

@@ -1,93 +1,98 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Header from 'src/components/Header';
 import Toggler from 'src/components/Toggler';
 import Currencies from 'src/components/Currencies';
 import Result from 'src/components/Result';
 
-import currenciesData from 'src/data/currencies';
+//import currenciesData from 'src/data/currencies';
 
 import './style.scss';
+import axios from 'axios';
 
-class Converter extends React.Component {
+function Converter() {
   // grâce au plugin de babel @babel/plugin-proposal-class-properties
   // on ne sera plus obligé de créer le constructor pour initialiser le state
   // il nous permet de créer des propriétés de classe
-  state = {
-    open: true,
-    baseAmount: 1,
-    currency: 'United States Dollar',
-    search: '',
-    currencies: currenciesData,
-  }
+  const [open, setOpen] = useState(true);
+  const [baseAmount, setBaseAmount] = useState(1);
+  const [currency, setCurrency] = useState('EUR');
+  const [search, setSearch] = useState('');
+  const [currencies, setCurrencies] = useState([]);
+  const [value, setValue] = useState(1);
+  const loaded = useRef(false);
 
-  // Les méthodes de cycle de vie permettent d'interagir avec le DOM
-  // ou l'extérieur de l'application. On gère les effets de bord ici :
-  // - appels aux API
-  // - Timers
-  // - Listeners
-  // - Manipulation du DOM réel
-
-  // appelé au premier rendu
-  componentDidMount() {
-    const { currency } = this.state;
-    this.pageTitleEffect();
-    document.addEventListener('keydown', this.handleEscKeyUp);
-  }
-
-  // phase de mise à jour
-  // appelé à chaque render (après le 1er rendu)
-  componentDidUpdate(prevState) {
-    const { currency } = this.state;
-    if (prevState.currency !== currency) {
-      this.pageTitleEffect();
+  const loadData = async () => {
+    const api_key = process.env.API_KEY;
+    try {
+      const JSONdata = await axios.get(`https://v6.exchangerate-api.com/v6/${api_key}/latest/EUR`);
+      const data = JSONdata.data.conversion_rates;
+      const currenciesData = [];
+      Object.keys(data).forEach((key) => {
+        currenciesData.push({
+          name: key,
+          rate: data[key]
+        });
+      });
+      setCurrencies(currenciesData);
+      loaded.current = true;
+    }
+    catch (error) {
+      console.log(error);   
     }
   }
 
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.handleEscKeyUp);
+  useEffect(() => {
+    pageTitleEffect();
+  }, [currency]);
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleEscKeyUp);
+  });
+
+  useEffect(loadData, []);
+
+  const makeConversion = () => {
+    const foundCurrency = currencies.find((item) => item.name === currency);
+    const result = baseAmount * foundCurrency.rate;
+    return Number(result.toFixed(2));
   }
 
-  handleEscKeyUp = (event) => {
+  useEffect(() => {
+    // Nous ne devons changer la valeur à convertir que quand le composant est monté
+    // càd quand loaded vaut true
+    if(loaded.current){
+       setValue(makeConversion(currency));
+    }
+   
+  }, [currency]);
+
+  const handleEscKeyUp = (event) => {
     if (event.key === 'Escape') {
-      this.setOpen();
+      setOpen(!open);
     }
   }
 
-  pageTitleEffect = () => {
-    const { currency } = this.state;
+  const pageTitleEffect = () => {
     document.title = currency;
   }
 
-  setOpen = () => {
-    // les fonctions fléchées ne redéfinissent pas de contexte d'exécution
-    // elles prennent le contexte parent
-    // ici on a le this de la classe
-    const { open } = this.state;
-    this.setState({
-      open: !open,
-    });
+  const handleClickCurrency = (currencyToConvert) => {
+    setCurrency(currencyToConvert);
   }
 
-  handleClickCurrency = (currencyToConvert) => {
-    this.setState({
-      currency: currencyToConvert,
-    });
+  const handleClickToggler = () => {
+    setOpen(!open);
   }
 
-  setSearch = (value) => {
-    this.setState({
-      search: value,
-    });
+  const onChangeInputValue = (value) => {
+    setSearch(value);
   }
 
-  setBaseAmount = (value) => {
-    this.setState({
-      baseAmount: value,
-    });
+  const onChangeBaseAmount = (value) => {
+    setBaseAmount(value);
   }
 
-  getCurrencies = () => {
-    const { currencies, search } = this.state;
+  const getCurrencies = () => {
     let filteredListCurrenciesList = currencies;
 
     // ici je veux filtrer la liste des devises en fonction de search
@@ -103,47 +108,34 @@ class Converter extends React.Component {
     return filteredListCurrenciesList;
   }
 
-  makeConversion = () => {
-    const { baseAmount, currency } = this.state;
-    const foundCurrency = currenciesData.find((item) => item.name === currency);
-    const result = baseAmount * foundCurrency.rate;
-    return Number(result.toFixed(2));
-  }
+  // const value = 1;
 
-  render() {
-    const {
-      open, baseAmount, currency, search,
-    } = this.state;
+  // à chaque rendu du JSX, on récupère la liste des devises
+  // filtrées en fonction de la valeur de search
+  const currenciesList = getCurrencies();
 
-    const value = this.makeConversion();
-
-    // à chaque rendu du JSX, on récupère la liste des devises
-    // filtrées en fonction de la valeur de search
-    const currenciesList = this.getCurrencies();
-
-    return (
-      <div className="converter">
-        <Header
-          title="Converter"
-          baseAmount={baseAmount}
-          onChangeBaseAmount={this.setBaseAmount}
-        />
-        <Toggler open={open} onClick={this.setOpen} />
-        { open && (
-        <Currencies
-          currencies={currenciesList}
-          inputValue={search}
-          handleClickCurrency={this.handleClickCurrency}
-          onChangeInputValue={this.setSearch}
-        />
-        ) }
-        <Result
-          value={value}
-          currency={currency}
-        />
-      </div>
-    );
-  }
+  return (
+    <div className="converter">
+      <Header
+        title="Converter"
+        baseAmount={baseAmount}
+        onChangeBaseAmount={onChangeBaseAmount}
+      />
+      <Toggler open={open} onClick={handleClickToggler} />
+      { open && (
+      <Currencies
+        currencies={currenciesList}
+        inputValue={search}
+        handleClickCurrency={handleClickCurrency}
+        onChangeInputValue={onChangeInputValue}
+      />
+      ) }
+      <Result
+        value={value}
+        currency={currency}
+      />
+    </div>
+  );
 }
 
 export default Converter;
